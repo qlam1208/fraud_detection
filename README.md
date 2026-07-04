@@ -1,4 +1,4 @@
-# Hệ thống phát hiện gian lận thẻ tín dụng Real-time 🕵️‍♂️💳
+# Hệ thống phát hiện gian lận thẻ tín dụng Real-time 
 
 Project ứng dụng Machine Learning và Data Engineering để phát hiện các giao dịch gian lận thẻ tín dụng theo thời gian thực. 
 
