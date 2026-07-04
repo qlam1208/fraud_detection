@@ -9,7 +9,7 @@ Dự án có sự kết hợp của các công nghệ sau:
 - **Machine Learning:** Sử dụng mô hình **XGBoost** để dự đoán, kết hợp với kỹ thuật **SMOTE** (thư viện imbalanced-learn) để tạo thêm dữ liệu giả cho nhóm lừa đảo.
 - **Quản lý dữ liệu (Data Engineering):** 
   - **Kafka (Confluent Cloud):** Đóng vai trò là hệ thống truyền dữ liệu streaming.
-  - **PySpark:** Hứng dữ liệu từ Kafka và dùng model để dự đoán trực tiếp (Streaming Inference).
+  - **PySpark:** Hứng dữ liệu từ Kafka và dùng model để dự đoán trực tiếp.
   - **Apache Airflow:** Lập lịch để tự động hóa quá trình huấn luyện (train) model.
   - **MLflow:** Ghi lại các chỉ số đánh giá (F1, Precision...) và lưu trữ model.
   - **Docker Compose:** Đóng gói và khởi chạy toàn bộ hệ thống một cách nhanh chóng.
@@ -30,11 +30,11 @@ bash
 
 
 docker compose up -d
-Mở trình duyệt, truy cập vào trang quản lý Airflow: http://localhost:8080 (tài khoản: airflow / mật khẩu: airflow).
-Chạy (Trigger) DAG có tên fraud_detection_training. Lúc này hệ thống sẽ tự động tải dữ liệu về và bắt đầu train model.
+Mở trình duyệt, truy cập vào trang quản lý Airflow: http://localhost:8080
+Trigger DAG có tên fraud_detection_training. Lúc này hệ thống sẽ tự động tải dữ liệu về và bắt đầu train model.
 Có thể xem chi tiết điểm số của model trên trang MLflow tại địa chỉ: http://localhost:5500.
-Bước 3: Chạy dự đoán thời gian thực (Real-time Inference)
-Khi model đã train xong (xuất hiện file fraud_detection_model.pkl trong thư mục models), tiến hành bật Producer và công cụ dự đoán Inference
+Bước 3: Real-time Inference
+Khi model đã train xong, tiến hành bật Producer và công cụ dự đoán Inference
 
 bash
 
