@@ -14,7 +14,7 @@ x-airflow-common:
     AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-webserver:8080/api/v1/dag_runs'
+    #AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-webserver:8080/api/v1/dag_runs'
     AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW__API_AUTH__JWT_SECRET:-airflow_jwt_secret}
     AIRFLOW__API_AUTH__JWT_ISSUER: ${AIRFLOW__API_AUTH__JWT_ISSUER:-airflow}
     # yamllint disable rule:line-length
@@ -363,20 +363,31 @@ services:
       - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-    command: mlflow server --port 5500 --host 0.0.0.0 --backend-store-uri postgresql+psycopg2://mlflow:mlflow@postgres/mlflow --default-artifact-root s3://mlflow
+    command: mlflow server --port 5500 --host 0.0.0.0 --backend-store-uri postgresql+psycopg2://mlflow:mlflow@postgres/mlflow --default-artifact-root s3://mlflow  --allowed-hosts "*"
     networks:
       - fraud-detection
 
 
   producer:
     build: ./producer
+    profiles: ["manual"]
     env_file: .env
     deploy:
-      replicas: 2
+      replicas: 1
       resources:
         limits:
           cpus: '1'
           memory: 1G
+    networks:
+      - fraud-detection
+
+  inference:
+    build: ./inference
+    env_file: .env
+    volumes:
+      - ./models:/app/models
+      - ./config:/app/config
+      - ./.env:/app/.env
     networks:
       - fraud-detection
 

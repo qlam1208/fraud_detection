@@ -11,3 +11,4 @@ scikit-learn
 boto3
 tqdm
 tqdm-joblib
+matplotlib
