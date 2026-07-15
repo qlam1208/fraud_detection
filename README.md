@@ -26,7 +26,6 @@ KAFKA_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule r
 
 Bước 2: Khởi động hệ thống và Train model
 Mở terminal ở thư mục src/ và chạy lệnh sau để bật các dịch vụ Docker:
-bash
 
 
 docker compose up -d
@@ -36,7 +35,6 @@ Có thể xem chi tiết điểm số của model trên trang MLflow tại đị
 Bước 3: Real-time Inference
 Khi model đã train xong, tiến hành bật Producer và công cụ dự đoán Inference
 
-bash
 
 # Bật bộ dự đoán
 docker compose up --force-recreate -d inference
